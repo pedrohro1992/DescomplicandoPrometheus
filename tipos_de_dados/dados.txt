@@ -1,0 +1,26 @@
+O prometheus tem alguns tipos diferentes de dados que servem a propositos diferentes, um tipo GAUGE(por exemplo) serve pra métricas que são atualizadas de tempos em tempos,
+mas, além dessas, existem algumas outras
+
+gauge:MEDIDOR
+Esse tipo de dado é usado pra métricas que são atualizadas pra cima ou pra baixo, como uso de mémoria ou de CPU
+
+counter: CONTADOR
+
+O tipo counter são pra métricas que são acumulativas, como o numero de acesso á um path numa api, mas, como esses valores são atualizados como frequencia(Uma api publica
+que conta com centenas de acesso por segundo, por exemplo) o numero atual não é tão importante, por isso, as métricas do tipo conunter, normalmente, contam com o sufixo
+_total no final (requests_with_error_total) para podermos pegar o total dessa métricas por um periodo de tempos
+
+histogram: Histograma 
+
+O histogram permite especificar os dados atráves de buckets pré-definidos, que vão de 0 a 10, podendo ser maior se a necessidade assim pedir, mas, precisa de personalização
+com ele, podemos colocar métricas com tempo, por exemplo, o tempo que uma aplicação demorou pra responder, dependendo do valor, ela vai em um certo bucket.
+Se for entre 0 e 0.5 segundos ele vai num bucket, valores maiores vão em buckets são para valores maiores
+Existem alguns sufixos para esse tipo de métrica
+ - _bucket indica que o valor é um bucket
+ - _count indica que é um contador 
+ - _sum indica que o valor é somado
+Nele os percentuais e as janelas de tempo são criadas junto com a declaração da métrica
+
+summary: Resumo
+È bem parecido com o summary, mas, ao invés de bucket temos quantiles, que vão de 0 a 1, no histogram é que os quantiles são como "porcentagem" então a gente pode ver
+quantas requisões foram feitas com erro 500 com base no quantile 
